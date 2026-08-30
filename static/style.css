@@ -1,0 +1,121 @@
+/* Clean Corporate SaaS Theme */
+body {
+    background-color: #cfecf4; 
+    color: #334155; 
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Deep Navy Navbar */
+.navbar {
+    background-color: #0f172a !important; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+
+/* Elevated White Cards */
+.card {
+    background-color: #0f172a !important;
+    border: none !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    color: #334155;
+}
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    font-weight: 600;
+}
+
+/* Highly Readable Table */
+/* .table {
+    background-color: #ffffff;
+    color: #334155;
+    margin-bottom: 0;
+}
+.table thead th {
+    background-color: #f1f5f9;
+    color: #475569;
+    border-bottom: 2px solid #cbd5e1;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+.table tbody td {
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+.table-hover tbody tr:hover {
+    background-color: #f8fafc !important;
+} */
+
+/* Table Dark Theme with White Text (#0f172a background) */
+.table {
+    color: #FFFFFF !important;
+    background-color: #0f172a !important;
+    --bs-table-bg: #0f172a;
+    --bs-table-color: #FFFFFF;
+}
+
+.table thead th {
+    background-color: #1F2937 !important;
+    color: #FFFFFF !important;
+    border-bottom: 2px solid #374151;
+}
+
+.table tbody td {
+    color: #FFFFFF !important;
+    border-bottom: 1px solid #374151;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #1F2937 !important;
+    color: #FFFFFF !important;
+}
+
+/* Professional Corporate Blue Buttons */
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+/* Clean Inputs & Dropdowns */
+.form-control, .form-select {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #334155;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+/* Login and Form Labels White Fix */
+label, .form-label {
+    color: #FFFFFF !important;
+}
+/* Make Modal text and inputs dark for readability */
+.modal-content {
+    background-color: #FFFFFF !important;
+    color: #111827 !important;
+}
+
+.modal-content .form-control, 
+.modal-content .form-select {
+    background-color: #F9FAFB !important;
+    color: #111827 !important;
+    border-color: #D1D5DB !important;
+}
+
+.modal-content label, 
+.modal-content .form-label,
+.modal-content .modal-title {
+    color: #111827 !important;
+}

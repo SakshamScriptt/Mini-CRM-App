@@ -1,0 +1,200 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Executive Analytics</h3>
+</div>
+
+<!-- Metrics Cards
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100 border-0 border-top border-primary border-4">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted text-uppercase fw-bold mb-3">Total Customers</h6>
+                <h1 class="display-4 fw-bold text-primary">{{ total }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100 border-0 border-top border-success border-4">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted text-uppercase fw-bold mb-3">Active Customers</h6>
+                <h1 class="display-4 fw-bold text-success">{{ active }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100 border-0 border-top border-warning border-4">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted text-uppercase fw-bold mb-3">Pending Requests</h6>
+                <h1 class="display-4 fw-bold text-warning">{{ pending }}</h1>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Metrics Cards -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-body text-center">
+                <h6 class="card-title text-white text-uppercase fw-bold mb-3">Total Customers</h6>
+                <h1 class="display-4 fw-bold text-primary">{{ total }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-body text-center">
+                <h6 class="card-title text-white text-uppercase fw-bold mb-3">Active Customers</h6>
+                <h1 class="display-4 fw-bold text-success">{{ active }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-body text-center">
+                <h6 class="card-title text-white text-uppercase fw-bold mb-3">Pending Requests</h6>
+                <h1 class="display-4 fw-bold text-warning">{{ pending }}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4 Charts Grid Layer -->
+<div class="row">
+    <!-- Chart 1: Doughnut (Status) -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header border-0 bg-transparent pt-3">
+                <h6 class="mb-0 text-white">Status Distribution</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 2: Bar (Email Domains) -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header border-0 bg-transparent pt-3">
+                <h6 class="mb-0 text-white">Email Provider Analytics</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="domainChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 3: Line (Growth Trend) -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header border-0 bg-transparent pt-3">
+                <h6 class="mb-0 text-white">Customer Growth Trend</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="growthChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 4: Polar Area (Traffic Sources) -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header border-0 bg-transparent pt-3">
+                <h6 class="mb-0 text-white">Acquisition Channels</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="sourceChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Logic -->
+<script>
+    // Global Settings for Dark Theme
+    Chart.defaults.color = '#9CA3AF';
+    Chart.defaults.scale.grid.color = 'rgba(255, 255, 255, 0.05)';
+    Chart.defaults.scale.grid.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Status Distribution (Doughnut Chart)
+    const ctx1 = document.getElementById('statusChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+            labels: ['Active', 'Pending'],
+            datasets: [{
+                data: [{{ active }}, {{ pending }}],
+                backgroundColor: ['#10B981', '#F59E0B'],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    // 2. Email Providers (Bar Chart) - Real data from backend
+    const ctx2 = document.getElementById('domainChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: {{ domain_labels | safe }},
+            datasets: [{
+                label: 'Users',
+                data: {{ domain_data | safe }},
+                backgroundColor: '#3B82F6',
+                borderRadius: 5
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+
+    // 3. Customer Growth Trend (Line Chart) - Trend visualization
+    const ctx3 = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Total Customers',
+                data: [2, 5, 8, 15, 22, {{ total }}], // Ends with your actual total
+                borderColor: '#8B5CF6',
+                backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4 // Curves the line smoothly
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // 4. Acquisition Channels (Polar Area Chart)
+    const ctx4 = document.getElementById('sourceChart').getContext('2d');
+    new Chart(ctx4, {
+        type: 'polarArea',
+        data: {
+            labels: ['Direct', 'Social Media', 'Referrals', 'Organic Search'],
+            datasets: [{
+                data: [15, 10, 5, 8],
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(16, 185, 129, 0.7)',
+                    'rgba(245, 158, 11, 0.7)',
+                    'rgba(239, 68, 68, 0.7)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+    });
+</script>
+
+<style>
+    /* Setting a fixed height so charts don't get too big */
+    .card-body canvas {
+        max-height: 250px;
+    }
+</style>
+{% endblock %}
